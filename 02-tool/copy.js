@@ -90,3 +90,30 @@ function deepCloneBfs(data) {
   }
   return target;
 }
+
+// 拷贝
+let arr = [1, 2, {
+  a: [3, 4]
+}];
+let obj1 = {
+  a: 1,
+  b: {
+    c: 2
+  }
+}
+// 环状数据
+const obj = {
+  foo: {
+    name: 'foo',
+    bar: {
+      name: 'bar',
+      baz: {
+        name: 'baz',
+        aChild: null //待会让它指向obj.foo
+      }
+    }
+  }
+}
+obj.foo.bar.baz.aChild = obj.foo;
+let obj2 = deepCloneBfs(obj);
+console.log(obj2);

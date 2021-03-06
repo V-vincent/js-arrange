@@ -1,7 +1,7 @@
 // A对象通过继承B对象，直接拥有B对象的所有属性和方法。
 // 原型链继承
 // 将父类的实例作为子类的原型
-// // 父类
+// 父类
 // function Parent(name) {
 //   this.name = name || '干饭人';
 //   this.run = function () {
@@ -11,11 +11,11 @@
 // Parent.prototype.say = function () {
 //   console.log('我是' + this.name);
 // }
-// // 子类
+// 子类
 // function Child() { };
-// // 将父类的实例作为子类的原型
+// 将父类的实例作为子类的原型
 // Child.prototype = new Parent();
-// // 子类的实例
+// 子类的实例
 // let child1 = new Child();
 // child1.say(); // 我是干饭人
 // child1.run(); // 干饭人干饭
@@ -30,7 +30,7 @@
 //     console.log(this.name + '干饭');
 //   }
 // }
-// // 在子类构造函数中通用 call() 调用父类型构造函数
+// 在子类构造函数中通用 call() 调用父类型构造函数
 // function Child (name) {
 //   Parent.call(this, name);
 // }
@@ -54,11 +54,11 @@
 //   console.log('我是' + this.name);
 // }
 // function Child (name, time) {
-//   // 在子类的构造函数中通过 Parent.call(this) 继承父类的属性
+// 在子类的构造函数中通过 Parent.call(this) 继承父类的属性
 //   Parent.call(this, name);
 //   this.time = time || '十二点';
 // }
-// // 改变子类的原型为 new Parent() 来继承父类的函数
+// 改变子类的原型为 new Parent() 来继承父类的函数
 // Child.prototype = new Parent();
 // let child1 = new Child('干饭魂', '七点');
 // child1.run(); // 干饭魂干饭
