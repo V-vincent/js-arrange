@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  #content {
+    height: 300px;
+    line-height: 300px;
+    text-align: center;
+    color: #fff;
+    background-color: #ccc;
+    font-size: 80px;
+  }
+</style>
+<body>
+  <div id="content">0</div>
+</body>
+</html>
+<script src="./debThr.js"></script>
+<script src="./copy.js"></script>
+<script>
+  // 节流、防抖
+  let num = 0;
+  let content = document.getElementById('content');
+  function add() {
+    content.innerHTML = num++;
+  }
+  // content.onmousemove = debounce(add);
+  content.onmousemove = throttle(add);
+
+  // 拷贝
+  let arr = [1, 2, {
+    a: [3, 4]
+  }];
+  let obj1 = {
+    a: 1,
+    b: {
+      c: 2
+    }
+  }
+  // 环状数据
+  const obj = {
+    foo: {
+      name: 'foo',
+      bar: {
+        name: 'bar',
+        baz: {
+          name: 'baz',
+          aChild: null //待会让它指向obj.foo
+        }
+      }
+    }
+  }
+  obj.foo.bar.baz.aChild = obj.foo;
+  let obj2 = deepCloneBfs(obj);
+  console.log(obj2);
+
+</script>
