@@ -1,3 +1,19 @@
+// function Person(name) {
+//   this.name = name;
+// }
+
+// let person = new Person('张三');
+// // person.say(); // 张三
+// console.log(person.constructor === Person); // true
+
+// Person.prototype.say = function () {
+//   console.log(this.name);
+// }
+// console.log(typeof Person.prototype); // "object"
+// var person1 = new Person('Mick');
+// person1.name = 'Mick11'; // 此时 person1 已经有 name 这个属性了
+// person1.say();
+
 // A对象通过继承B对象，直接拥有B对象的所有属性和方法。
 // 原型链继承
 // 将父类的实例作为子类的原型
