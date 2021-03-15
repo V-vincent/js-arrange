@@ -22,3 +22,5 @@ function Person(name) {
 }
 let person = myNew(Person, '你好，new');
 console.log(person); // {name: "你好，new"}
+
+// 手写实现call、apply、bind函数
