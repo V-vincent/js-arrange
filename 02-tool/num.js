@@ -10,7 +10,7 @@ function numAddThousandCharacters(num) {
   })
   // toLocaleString()
   res = parseFloat(num).toLocaleString();
-  res = (num.toFixed(2) + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+  res = (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
   return res;
 }
 let num = numAddThousandCharacters(12345678.23);
