@@ -1,13 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
-  
+  <div>
+    <button id="btn">按下来</button>
+    <ul id="ul">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+    </ul>
+  </div>
 </body>
+
 </html>
 <script src="./06-this.js"></script>
+<script>
+  // 注册事件，阻止事件冒泡
+  let btn = document.getElementById('btn');
+  btn.addEventListener('click', function (e) {
+    // e.stopImmediatePropagation(); // 阻止捕获事件
+    e.stopPropagation(); // 阻止事件冒泡
+    console.log('注册事件', e)
+  })
+  btn.addEventListener('click', event => {
+    console.log('捕获 ')
+  })
+
+  // 事件代理
+  let ul = document.querySelector('#ul');
+  ul.addEventListener('click', function (event) {
+    let target = event.target;
+    if (target.nodeName.toLowerCase() === 'li') {
+      console.log(target.innerHTML);
+    }
+  })
+</script>
