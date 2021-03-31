@@ -130,7 +130,78 @@ function foo() {
 
 // 作用域链和闭包
 
+// 作用域链和词法作用域
+// function bar() {
+//   console.log(myName)
+// }
+// function foo() {
+//   var myName = "极客邦"
+//   bar()
+// }
+// var myName = "极客时间"
+// foo()
 
+// 块级作用域中的变量查找
+// function bar() {
+//   var myName = "极客世界"
+//   let test1 = 100
+//   if (1) {
+//     let myName = "Chrome浏览器"
+//     console.log(test)
+//   }
+// }
+// function foo() {
+//   var myName = "极客邦"
+//   let test = 2
+//   {
+//     let test = 3
+//     bar()
+//   }
+// }
+// var myName = "极客时间"
+// let myAge = 10
+// let test = 1
+// foo(); // 1
+
+// 闭包
+
+function foo() {
+  var myName = "极客时间"
+  let test1 = 1
+  const test2 = 2
+  var innerBar = {
+    getName: function () {
+      console.log(test1)
+      return myName
+    },
+    setName: function (newName) {
+      myName = newName
+    }
+  }
+  return innerBar
+}
+// var bar = foo()
+// bar.setName("极客邦")
+// bar.getName(); // 1
+// console.log(bar.getName()); // 1 极客邦
+
+
+var bar = {
+  myName: "time.geekbang.com",
+  printName: function () {
+    console.log(myName)
+  }
+}
+function foo() {
+  let myName = "极客时间"
+  return bar.printName
+}
+let myName = "极客邦"
+let _printName = foo()
+_printName()
+bar.printName()
+
+// 闭包扩展
 // function add() {
 //     var counter = 0;
 //     return counter += 1;
@@ -138,12 +209,12 @@ function foo() {
 // add();
 // add();
 // add();
-var add = (function () {
-  var counter = 0;
-  return function () {
-    return counter += 1;
-  }
-})();
+// var add = (function () {
+//   var counter = 0;
+//   return function () {
+//     return counter += 1;
+//   }
+// })();
 // function add() {
 //     var counter = 0;
 //     return function () {
@@ -178,25 +249,24 @@ var add = (function () {
 //     }, 10, i)
 // }
 
-function MyObject(name, message) {
-  this.name = name.toString();
-  this.message = message.toString();
-  this.getName = function () {
-    return this.name;
-  };
+// function MyObject(name, message) {
+//   this.name = name.toString();
+//   this.message = message.toString();
+//   this.getName = function () {
+//     return this.name;
+//   };
 
-  this.getMessage = function () {
-    return this.message;
-  };
-}
+//   this.getMessage = function () {
+//     return this.message;
+//   };
+// }
 
-function MyObject(name) {
-  this.name = name.toString();
-}
-MyObject.prototype.getName = function () {
-  return this.name;
-}
-
+// function MyObject(name) {
+//   this.name = name.toString();
+// }
+// MyObject.prototype.getName = function () {
+//   return this.name;
+// }
 
 // function Cars(){
 //     this.name = "BMW";
@@ -229,14 +299,14 @@ MyObject.prototype.getName = function () {
 // var instance = new Cars();
 // console.log(instance.sayColor()())
 
-var single = function () {
-  var obj = {
-    name: 'vincent',
-    age: 18
-  };
-  function getName() {
-    return obj.name;
-  };
-  return getName();
-}
-var getName = single();
+// var single = function () {
+//   var obj = {
+//     name: 'vincent',
+//     age: 18
+//   };
+//   function getName() {
+//     return obj.name;
+//   };
+//   return getName();
+// }
+// var getName = single();

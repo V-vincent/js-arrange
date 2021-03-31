@@ -141,3 +141,29 @@ Function.prototype.myBind = function (context) {
 }
 let myBind = obj.say.myBind(obj2, '买入', '吗？')
 myBind('卖出')
+
+
+// let bar = {
+//   myName: "极客邦",
+//   test1: 1
+// }
+// function foo() {
+//   this.myName = "极客时间"
+// }
+// foo.call(bar)
+// console.log(bar)
+
+
+var myObj = {
+  name: "极客时间",
+  showThis: function () {
+    console.log(this); // myObj
+    let self = this;
+    // function bar() {
+    //   console.log(self); // myObj
+    // }
+    var bar = () => { console.log(this) }
+    bar()
+  }
+}
+myObj.showThis();
