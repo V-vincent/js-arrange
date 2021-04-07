@@ -15,15 +15,12 @@ var f = [5, 8];
 f.join = f.shift;
 console.log(f == 5 && f == 8);
 
-var g = new Proxy({
-  i: 0,
-}, {
+var g = new Proxy({ i: 0 }, {
   get(target) {
     return () => target.i++ * 3 + 5;
   }
 });
 console.log(g == 5 && g == 8);
-
 var h = 0;
 Object.defineProperty(window, 'i', {
   get: function () {
