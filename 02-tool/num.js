@@ -10,17 +10,17 @@ function numAddThousandCharacters(num) {
   })
   // toLocaleString()
   res = parseFloat(num).toLocaleString();
-  res = (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+  res = (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
   return res;
 }
-let num = numAddThousandCharacters(12345678.23);
+// let num = numAddThousandCharacters(12345678.23);
 // console.log(num)
 
 // 数字去掉千分位
 function removeThousandSeparator(num) {
   return Number(num.toString().replace(/[ ]/g, "").replace(/,/gi, ""));
 }
-console.log(removeThousandSeparator(num));
+// console.log(removeThousandSeparator(num));
 
 // 金额转换大写
 function convertCurrency(money) {
@@ -98,3 +98,91 @@ function convertCurrency(money) {
   return chineseStr;
 }
 console.log(convertCurrency(123456.785))
+
+// 数字动画
+const Odometer = (function (win, doc) {
+  class OdometerFn {
+    constructor(x, y) {
+      this.setting = {
+        len: null, // 默认最小位数
+        speed: 1000, // 动画速度
+        num: "", // 初始化值
+        symbol: '', // 默认的分割符号，千，万，千万
+        dot: 0, // 保留几位小数点 
+        zero: true
+      }
+      this.$parent = doc.querySelector(x);
+      this.html = `<div class="number-animate-dom" data-num="{{num}}">
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">0</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">1</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">2</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">3</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">4</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">5</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">6</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">7</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">8</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">9</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">0</span>
+                        <span class="number-animate-span" style="font-family: digitalNumberFont;">.</span>
+                      </div>`;
+      this.extend(this.setting, y);
+      this.init(this.$parent, y)
+    }
+    init(x, y) {
+      x.innerHTML = this.setNumDom(this.numToArr(this.setting.num))
+      this.animate(x);
+    }
+    animate($parent) { // 执行动画
+      let $dom = $parent.querySelectorAll('.number-animate-dom');
+      for (let o of $dom) {
+        let num = o.getAttribute('data-num');
+        if (this.setting.zero) num = (num == 0 ? 10 : num);
+        this._height = o.offsetHeight / 12;
+        o.style['transform'] = o.style['-webkit-transform'] = 'translateY(' + (num == "." ? -11 * this._height : -num * this._height) + 'px)';
+        o.style['transition'] = o.style['-webkit-transition'] = (num == "." ? 0 : this.setting.speed / 1000) + 's'
+      }
+    }
+    setNumDom(arrStr) { // 分割符号
+      let shtml = '<div class="number-animate">';
+      arrStr.forEach((o, i) => {
+        if (i != 0 && (arrStr.length - i) % 3 == 0 && this.setting.symbol != "" && o != ".") {
+          shtml += '<div class="number-animate-dot"><span>' + this.setting.symbol + '</span></div>' + this.html.replace("{{num}}", o);
+        } else {
+          shtml += this.html.replace("{{num}}", o);
+        }
+      });
+      shtml += '</div>';
+      return shtml;
+    }
+    update(num) {
+      let newArr = this.numToArr(num); let $dom = this.$parent.querySelectorAll(".number-animate-dom");
+      if ($dom.length != newArr.length) {
+        this.$parent.innerHTML = this.setNumDom(this.numToArr(num))
+      } else {
+        [].forEach.call($dom, (o, i) => {
+          o.setAttribute('data-num', newArr[i]);
+        });
+      }
+      this.animate(this.$parent);
+    }
+    numToArr(num) {
+      num = parseFloat(num).toFixed(this.setting.dot);
+      let arrStr = typeof (num) === 'number' ? num.toString().split("") : num.split("")
+      let arrLen = arrStr.length;
+      if (arrStr.length <= this.setting.len) {
+        for (let _lens = 0; _lens < this.setting.len - arrLen; _lens++) {
+          arrStr.unshift(0)
+        }
+      }
+      return arrStr;
+    }
+    extend(n, n1) {
+      for (let i in n1) { n[i] = n1[i] }
+    }
+  }
+  return OdometerFn;
+})(window, document);
+// export { // 很关键
+//   Odometer
+// }
