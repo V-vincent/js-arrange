@@ -36,3 +36,33 @@ function throttle(fn, wait) {
     }
   }
 }
+
+// 实现一个sleep函数
+// Promise
+const sleep = (time) => {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+sleep(1000).then(() => {
+  console.log('sleep后打印');
+})
+
+// async
+function sleep1(time) {
+  return new Promise(resolve => setTimeout(resolve, time))
+}
+async function output1() {
+  let out = await sleep1(1000);
+  console.log('async');
+  return out;
+}
+output1();
+
+// ES5
+function sleep2(callback, time) {
+  if (typeof callback === 'function')
+    setTimeout(callback, time);
+}
+function output2() {
+  console.log('ES5');
+}
+sleep2(output2, 1000);
