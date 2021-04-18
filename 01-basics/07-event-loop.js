@@ -113,3 +113,27 @@
 // })
 // `nextTick1` => `nextTick3` => `nextTick2` => `promise1` => `setTimeout`
 
+
+// 同步回调
+// let callback = function () {
+//   console.log('i am do homework')
+// }
+// function doWork(cb) {
+//   console.log('start do work')
+//   cb()
+//   console.log('end do work')
+// }
+// // 回调函数 callback 是在主函数 doWork 返回之前执行的
+// doWork(callback)
+
+// 异步回调:
+// let callback = function () {
+//   console.log('i am do homework')
+// }
+// function doWork(cb) {
+//   console.log('start do work')
+//   setTimeout(cb, 1000)
+//   console.log('end do work')
+// }
+// // 回调函数在主函数外部执行
+// doWork(callback)
