@@ -7,6 +7,28 @@ Number.prototype.minus = function (num) {
 }
 // console.log((5).add(3).minus(2))
 
+// 使用迭代的方式实现 flatten 函数
+let flattenArr = [1, 2, 3, [4, 5], [6, [7, [8]]]];
+function flatten(arr) {
+  while (arr.some(item => Array.isArray(item))) {
+    arr = [].concat(...arr)
+  }
+  return arr;
+}
+// 递归实现
+function flatten1(arr) {
+  let arrs = [];
+  arr.map(item => {
+    if (Array.isArray(item)) {
+      arrs.push(...flatten(item))
+    } else {
+      arrs.push(item)
+    }
+  })
+  return arrs
+}
+// console.log(flatten1(flattenArr));
+
 // 某公司 1 到 12 月份的销售额存在一个对象里面
 // 如下：{1:222, 2:123, 5:888}，请把数据处理为如下结构：[222, 123, null, null, 888, null, null, null, null, null, null, null]。
 function dealSaleDate(obj) {
