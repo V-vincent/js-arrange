@@ -120,3 +120,13 @@ function LazyMan(name) {
 // LazyMan('Tony').sleep(1).eat('lunch');
 // LazyMan('Tony').eat('lunch').sleep(1).eat('dinner');
 // LazyMan('Tony').eat('lunch').eat('dinner').sleepFirst(2).sleep(1).eat('junk food');
+
+
+// 模拟实现一个 Promise.finally
+Promise.prototype.finally = function (callback) {
+  let P = this.constructor;
+  return this.then(
+    value => P.resolve(callback()).then(() => value),
+    reason => P.resolve(callback()).then(() => { throw reason })
+  );
+};
