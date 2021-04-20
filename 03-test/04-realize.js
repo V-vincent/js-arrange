@@ -123,10 +123,12 @@ function LazyMan(name) {
 
 
 // 模拟实现一个 Promise.finally
+// finally的作用：
+// 在promise结束时，无论结果是fulfilled或者是rejected，都会执行指定的回调函数
 Promise.prototype.finally = function (callback) {
-  let P = this.constructor;
+  let Fn = this.constructor;
   return this.then(
-    value => P.resolve(callback()).then(() => value),
-    reason => P.resolve(callback()).then(() => { throw reason })
+    res => Fn.resolve(callback()).then(() => res),
+    err => Fn.resolve(callback()).then(() => { throw err })
   );
 };
