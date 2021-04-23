@@ -29,6 +29,7 @@
 <body>
   <div id="content">0</div>
   <div class="odometer" style="transform: scale(1.3);"></div>
+  <input type="text" id="deInput">
 </body>
 
 </html>
@@ -44,6 +45,48 @@
   // content.onmousemove = debounce(add);
   content.onmousemove = throttle(add);
 
-  let monthAnimate = new Odometer(".odometer", { num: 42342 });
+  // let monthAnimate = new Odometer(".odometer", { num: 42342 });
 
+  let deInput = document.getElementById('deInput');
+  // 输入到input框触发input事件
+  // 失去焦点后内容有改变触发change事件
+  // 识别到你开始使用中文输入法触发compositionstart 事件
+  // 未输入结束但还在输入中触发compositionupdate事件
+  // 输入完成（回车或者选择了对应的文字插入到输入框的时刻）触发compositionend事件。
+  function debounceInput(fn, time) {
+    let timeout = null;
+    return function (e) {
+      // 如果正在输入中文则返回
+      if (e.target.composing) return;
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        fn.call(this, ...arguments);
+        timeout = null;
+      }, time);
+    }
+  }
+  // input防抖
+  deInput.addEventListener('input', debounceInput(function (e) {
+    console.log('inputFn', e.target.value);
+  }, 1000));
+  // 开始输入中文
+  deInput.addEventListener('compositionstart', function (e) {
+    e.target.composing = true;
+  })
+  // 输入中文结束后主动触发input事件
+  deInput.addEventListener('compositionend', function (e) {
+    e.target.composing = false;
+    var event = document.createEvent('HTMLEvents');
+    event.initEvent('input');
+    e.target.dispatchEvent(event);
+  })
+  // deInput.addEventListener('change', function (e) {
+  //   console.log('change', e.target.value)
+  // })
+  // deInput.addEventListener('compositionupdate', function (e) {
+  //   console.log('compositionupdate', e.target.value)
+  // })
+  // deInput.addEventListener('compositionend', function (e) {
+  //   console.log('compositionend', e.target.value)
+  // })
 </script>
