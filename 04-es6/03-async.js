@@ -95,99 +95,36 @@ async function async2() {
 // async2();
 // console.log('1');
 
-// 手写实现一个Promise
-// 看着这个Promise结构
-new Promise(function (resolve, reject) {
-  resolve(1);
-  // reject(2);
-}).then(function (data) {
-  // console.log(data);
-})
-// Promise传进去一个函数，函数里面怎么处理呢？
-// Promise内部是同步立即执行的，那么fn函数应该是直接执行？
-// 函数的两个参数也是函数：resolve、reject
-// 用try...catch...？catch捕获的肯定是执行reject函数了
-// then函数（链式调用）怎么实现呢？
-// resolve函数即then的第一个参数
-// reject可以当做then的第二个参数
 
-// 定义promise的三个状态
-const PENDING = 'PENDING';
-const RESOLVED = 'RESOLVED';
-const REJECTED = 'REJECTED';
-
-function myPromise(fn) {
-  // 当前执行上下文
-  let that = this;
-  // 初始状态是pending
-  that.status = PENDING;
-  // 参数
-  that.params = null;
-  // 定义两个回调数组：存储resolve和reject要执行的函数(then传进来的函数)
-  that.resolvedCallbacks = [];
-  that.rejectedCallbacks = [];
-
-  // 定义resolve函数
-  function resolve(params) {
-    // 只有状态为PENDING时才可以操作
-    if (that.status === PENDING) {
-      // 修改状态
-      that.status = RESOLVED;
-      that.params = params;
-      // console.log('我是resolve函数');
-      // 遍历执行函数
-      that.resolvedCallbacks.map(cb => cb(that.params));
-    }
-  }
-
-  // 定义rejected函数
-  function reject(params) {
-    // 只有状态为PENDING时才可以操作
-    if (that.status === PENDING) {
-      that.status = REJECTED;
-      that.params = params;
-      // console.log('我是reject函数');
-      // 遍历执行函数
-      that.rejectedCallbacks.map(cb => cb(that.params));
-    }
-  }
-
-  // 执行fn()
-  try {
-    fn(resolve, reject);
-    // console.log('我是fn函数');
-  } catch (err) {
-    reject(err);
-  }
+// event-loop
+async function foo() {
+  console.log('foo')
 }
-// 在Promise的原型上扩展then函数，实现链式调用
-// 其实就是把对应状态的函数加进回调数组中，等fn()函数执行完后执行回调
-myPromise.prototype.then = function (onFulfilled, onRejected) {
-  let that = this;
-  // console.log(that.status);
-  // 当状态为PENDING时，把onFulfilled和onRejected加进对应数组中
-  if (that.status === PENDING) {
-    that.resolvedCallbacks.push(onFulfilled);
-    that.rejectedCallbacks.push(onRejected);
-    // console.log(that.rejectedCallbacks, that.resolvedCallbacks);
-  }
-  // 当状态为RESOLVED时，执行onFulfilled
-  if (that.status === RESOLVED) {
-    onFulfilled(that.params);
-  }
-  // 当状态为RESOLVED时，执行onRejected
-  if (that.status === REJECTED) {
-    onRejected(that.params);
-  }
+async function bar() {
+  console.log('bar start')
+  await foo()
+  console.log('bar end')
 }
-
-new myPromise(function (resolve, reject) {
-  console.log(1);
-  resolve('我是resolve');
-  // reject('我是reject');
-  console.log(2);
-}).then(function (res) {
-  console.log('res:', res)
-}, function (err) {
-  console.log('err:', err)
+console.log('script start')
+setTimeout(function () {
+  console.log('setTimeout')
+}, 0)
+bar();
+new Promise(function (resolve) {
+  console.log('promise executor')
+  resolve();
+}).then(function () {
+  console.log('promise then')
 })
+console.log('script end')
+
+// script start
+// bar start
+// foo
+// promise executor
+// script end
+// bar end
+// promise then
+// setTimeout
+
+// node和浏览器的event loop是node 11版本开始统一的
