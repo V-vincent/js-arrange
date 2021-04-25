@@ -139,4 +139,81 @@ let demo = new Promise(executor)
 function onResolve(value) {
   console.log(value)
 }
-demo.then(onResolve)
+demo.then(onResolve);
+
+// 介绍下 Promise.all 使用、原理实现及错误处理
+// 使用
+// Promise.all()接受一个由promise任务组成的数组，可以同时处理多个promise任务，当所有的任务都执行完成时，
+// Promise.all()返回resolve，但当有一个失败(reject)，则返回失败的信息，即使其他promise执行成功，也会返回失败。
+// 以下 demo，请求两个 url，当两个异步请求返还结果后，再请求第三个 url
+const p1 = request(`url1`)
+const p2 = request(`url2`)
+Promise.all([p1, p2]).then((datas) => { // 此处 datas 为调用 p1, p2 后的结果的数组
+  return request(`url3?a=${datas[0]}&b=${datas[1]}`)
+}).then((data) => {
+  console.log(msg)
+})
+// 原理实现
+function promiseAll(promises) {
+  return new Promise(function (resolve, reject) {
+    if (!Array.isArray(promises)) {
+      return reject(new TypeError("argument must be anarray"))
+    }
+    let dealNum = 0;
+    let pLen = promises.length;
+    let res = new Array(pLen);
+    for (let i = 0; i < pLen; i++) {
+      Promise.resolve(promises[i]).then(function (value) {
+        dealNum++;
+        res[i] = value;
+        if (dealNum === pLen) {
+          return resolve(res)
+        }
+      }, function (err) {
+        return reject(reason)
+      })
+    }
+  })
+}
+let p1 = Promise.resolve(1);
+let p2 = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve(2);
+  }, 200)
+});
+let p3 = Promise.resolve(3);
+promiseAll([p1, p2, p3]).then(function (res) {
+  console.log(res);
+})
+
+// 错误处理
+// 有时候我们使用Promise.all()执行很多个网络请求，可能有一个请求出错，但我们并不希望其他的网络请求也返回reject，要错都错，这样显然是不合理的。
+// 如何做才能做到promise.all中即使一个promise程序reject，promise.all依然能把其他数据正确返回呢?
+// 当promise捕获到error 的时候，代码吃掉这个异常，返回resolve，约定特殊格式表示这个调用成功了
+let p4 = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve(4);
+  }, 0)
+});
+let p5 = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve(5);
+  }, 200)
+});
+let p6 = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    try {
+      console.log(XX.BBB);
+    }
+    catch (exp) {
+      resolve("error");
+    }
+  }, 100)
+});
+Promise.all([p4, p5, p6]).then(function (results) {
+  console.log("success")
+  console.log(results);
+}).catch(function (r) {
+  console.log("err");
+  console.log(r);
+});
