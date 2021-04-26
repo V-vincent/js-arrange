@@ -122,13 +122,3 @@ function LazyMan(name) {
 // LazyMan('Tony').eat('lunch').eat('dinner').sleepFirst(2).sleep(1).eat('junk food');
 
 
-// 模拟实现一个 Promise.finally
-// finally的作用：
-// 在promise结束时，无论结果是fulfilled或者是rejected，都会执行指定的回调函数
-Promise.prototype.finally = function (callback) {
-  let Fn = this.constructor;
-  return this.then(
-    res => Fn.resolve(callback()).then(() => res),
-    err => Fn.resolve(callback()).then(() => { throw err })
-  );
-};
