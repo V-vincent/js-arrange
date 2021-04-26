@@ -122,3 +122,21 @@ function LazyMan(name) {
 // LazyMan('Tony').eat('lunch').eat('dinner').sleepFirst(2).sleep(1).eat('junk food');
 
 
+// 请实现一个 add 函数，满足以下功能
+// add(1); 			// 1
+// add(1)(2);  	// 3
+// add(1)(2)(3); // 6
+// add(1)(2, 3); // 6
+// add(1, 2)(3); // 6
+// add(1, 2, 3); // 6
+function add() {
+  let args = [...arguments];
+  let fn = function () {
+    args.push(...arguments);
+    return add.call(null, ...args);
+  }
+  fn.toString = function () {
+    return args.reduce((pre, cur) => pre + cur);
+  }
+  return fn;
+}
