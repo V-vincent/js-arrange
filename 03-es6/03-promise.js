@@ -228,3 +228,14 @@ Promise.prototype.finally = function (callback) {
     err => Fn.resolve(callback()).then(() => { throw err })
   );
 };
+
+// 设计并实现 Promise.race()
+Promise.prototype.race = function (list) {
+  return new Promise((resolve, reject) => {
+    list.forEach(item => {
+      Promise.resolve(item).then(resolve, reject);
+    });
+  })
+}
+// Promise.all可以将多个实例组装成一个新的实例，成功的时候返回一个成功数组，失败的时候则返回最先被reject失败状态的值
+// race是赛跑的意思，即Promise.race([p1, p2, p3])里面的结果哪个获取的快，就返回哪个结果，不管结果本身是成功还是失败
