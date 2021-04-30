@@ -136,19 +136,46 @@ Foo.prototype.a = function () {
 Foo.a = function () {
   console.log(4)
 }
-// 现在在 Foo 上挂载了直接方法 a ，输出值为 4
-Foo.a();
-// 立刻执行了 Foo 上的 a 方法，也就是刚刚定义的，所以
-// # 输出 4
-let obj = new Foo();
-/* 
-  这里调用了 Foo 的构建方法。Foo 的构建方法主要做了两件事：
-  1. 将全局的 Foo 上的直接方法 a 替换为一个输出 1 的方法。
-  2. 在新对象上挂载直接方法 a ，输出值为 2。
-*/
-obj.a();
-// 因为有直接方法 a ，不需要去访问原型链，所以使用的是构建方法里所定义的 this.a，
-// # 输出 2
-Foo.a();
-// 构建方法里已经替换了全局 Foo 上的 a 方法，所以
-// # 输出 1
+// // 现在在 Foo 上挂载了直接方法 a ，输出值为 4
+// Foo.a();
+// // 立刻执行了 Foo 上的 a 方法，也就是刚刚定义的，所以
+// // # 输出 4
+// let obj = new Foo();
+// /* 
+//   这里调用了 Foo 的构建方法。Foo 的构建方法主要做了两件事：
+//   1. 将全局的 Foo 上的直接方法 a 替换为一个输出 1 的方法。
+//   2. 在新对象上挂载直接方法 a ，输出值为 2。
+// */
+// obj.a();
+// // 因为有直接方法 a ，不需要去访问原型链，所以使用的是构建方法里所定义的 this.a，
+// // # 输出 2
+// Foo.a();
+// // 构建方法里已经替换了全局 Foo 上的 a 方法，所以
+// // # 输出 1
+
+// 修改以下 print 函数，使之输出 0 到 99，或者 99 到 0
+// 要求：
+// 1、只能修改 setTimeout 到 Math.floor(Math.random() * 1000 的代码
+// 2、不能修改 Math.floor(Math.random() * 1000
+// 3、不能使用全局变量
+// function print(n) {
+//   setTimeout(() => {
+//     console.log(n);
+//   }, Math.floor(Math.random() * 1000));
+// }
+// for (var i = 0; i < 10; i++) {
+//   print(i);
+// }
+// // 1、按时间来
+// function print(n) {
+//   setTimeout(() => {
+//     console.log(n);
+//   }, 1, Math.floor(Math.random() * 1000));
+// }
+// // 2、匿名函数
+// function print(n) {
+//   setTimeout(console.log(n), Math.floor(Math.random() * 1000));
+//   // setTimeout((() => {
+//   //   console.log(n);
+//   // })(n), Math.floor(Math.random() * 1000));
+// }
