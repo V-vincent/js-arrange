@@ -141,7 +141,6 @@ function add() {
   return fn;
 }
 
-
 // 在输入框中如何判断输入的是一个正确的网址
 function isUrl(url) {
   try {
@@ -150,4 +149,17 @@ function isUrl(url) {
   } catch (err) {
     return false;
   }
+}
+
+// 不用加减乘除运算符，求整数的7倍
+function getSevenNum(num) {
+  let arr = Array(num);
+  let res = Array(7).fill(1).map(() => {
+    res.push(...arr);
+  })
+  return res.length;
+}
+function getSevenNum2(num) {
+  // 进制转换方式 - 利用 toString 转为七进制整数；然后末尾补0(左移一位)后通过 parseInt 转回十进制
+  return parseInt([num.toString(7), '0'].join(''), 7);
 }
