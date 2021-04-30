@@ -107,3 +107,14 @@
 // Symbol类型的数据是唯一的，当作键名也不会一样，所以a[b] 会输出 'b'
 // example 3
 // 对象转字符串默认调用 toString 方法，a[b]和a[c]都是a['[object Object]']
+
+
+// 写出如下代码的打印结果
+function changeObjProperty(o) {
+  o.siteUrl = "http://www.baidu.com";
+  o = new Object(); // 引用改变
+  o.siteUrl = "http://www.google.com";
+}
+let webSite = new Object();
+changeObjProperty(webSite);
+console.log(webSite.siteUrl); // "http://www.baidu.com"
