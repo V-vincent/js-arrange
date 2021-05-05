@@ -163,3 +163,45 @@ function getSevenNum2(num) {
   // 进制转换方式 - 利用 toString 转为七进制整数；然后末尾补0(左移一位)后通过 parseInt 转回十进制
   return parseInt([num.toString(7), '0'].join(''), 7);
 }
+
+
+// 模拟实现一个 localStorage
+class localStorage {
+  constructor() {
+    this.store = {};
+  }
+  setItem(key, val) {
+    this.store[key] = val;
+  }
+  getItem(key) {
+    return this.store[key] || null;
+  }
+  removeItem(key) {
+    delete this.store[key]
+  }
+  clear() {
+    this.store = {};
+  }
+}
+
+// 模拟 localStorage 时如何实现过期时间功能
+(function () {
+  var getItem = localStorage.getItem.bind(localStorage)
+  var setItem = localStorage.setItem.bind(localStorage)
+  var removeItem = localStorage.removeItem.bind(localStorage)
+  localStorage.getItem = function (keyName) {
+    var expires = getItem(keyName + '_expires')
+    if (expires && new Date() > new Date(Number(expires))) {
+      removeItem(keyName)
+      removeItem(keyName + '_expires')
+    }
+    return getItem(keyName)
+  }
+  localStorage.setItem = function (keyName, keyValue, expires) {
+    if (typeof expires !== 'undefined') {
+      var expiresDate = new Date(expires).valueOf()
+      setItem(keyName + '_expires', expiresDate)
+    }
+    return setItem(keyName, keyValue)
+  }
+})()
