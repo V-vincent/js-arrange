@@ -179,3 +179,9 @@ Foo.a = function () {
 //   //   console.log(n);
 //   // })(n), Math.floor(Math.random() * 1000));
 // }
+
+// 分别写出如下代码的返回值
+String('11') == new String('11'); // true
+String('11') === new String('11'); // false
+// new String() 返回的是对象
+// == 的时候会隐性转换，实际运行的是 String('11') == new String('11').toString();
