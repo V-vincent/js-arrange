@@ -185,3 +185,32 @@ String('11') == new String('11'); // true
 String('11') === new String('11'); // false
 // new String() 返回的是对象
 // == 的时候会隐性转换，实际运行的是 String('11') == new String('11').toString();
+
+// 请写出如下代码的打印结果
+var name = 'Tom';
+(function () {
+  if (typeof name == 'undefined') {
+    var name = 'Jack';
+    console.log('Goodbye ' + name);
+  } else {
+    console.log('Hello ' + name);
+  }
+})();
+// Goodbye Jack
+// 变量提升
+
+// 扩展题，请写出如下代码的打印结果
+var name = 'Tom';
+(function () {
+  if (typeof name == 'undefined') {
+    name = 'Jack';
+    console.log('Goodbye ' + name);
+  } else {
+    console.log('Hello ' + name);
+  }
+})();
+// hello Tom
+// 1、首先在进入函数作用域当中，获取name属性
+// 2、在当前作用域没有找到name
+// 3、通过作用域链找到最外层，得到name属性
+// 4、执行else的内容，得到Hello Tom
