@@ -218,3 +218,23 @@ function getUrlValue(url) {
   let res = url.match(/(?<=elective=)(\d+(,\d+)*)/);
   return res ? res[0].split(',') : [];
 }
+
+// 编程题，请写一个函数，完成以下功能
+// 输入 '1, 2, 3, 5, 7, 8, 10' 输出 '1~3, 5, 7~8, 10'
+// 连续数归纳
+function continuityNum(str) {
+  let arr = str.split(',');
+  arr.push('');
+  let res = [];
+  let start = end = parseInt(arr[0]);
+  for (let i = 1; i < arr.length; i++) {
+    if (end + 1 == arr[i]) {
+      end++;
+    } else {
+      if (start == end) res.push(start);
+      else res.push(start + '~' + end);
+      start = end = parseInt(arr[i]);
+    }
+  }
+  return res.join(',');
+}
