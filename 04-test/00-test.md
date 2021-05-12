@@ -17,3 +17,42 @@
 let panter = new RegExp(word, 'g')
 str.replace(panter, '<b style="color: #2D7BFF">' + word + '</b>')
 ```
+
+### 如何用 css 或 js 实现多行文本溢出省略效果，考虑兼容性
+单行：
+```css
+.text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+```
+多行：
+```css
+.text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; // 行数
+  overflow: hidden;
+}
+```
+兼容：
+```css
+p {
+  position: relative;
+  line-height: 20px;
+  max-height: 40px;
+  overflow: hidden;
+}
+p::after {
+  content: "...";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-left: 40px;
+  background: -webkit-linear-gradient(left, transparent, #fff 55%);
+  background: -o-linear-gradient(right, transparent, #fff 55%);
+  background: -moz-linear-gradient(right, transparent, #fff 55%);
+  background: linear-gradient(to right, transparent, #fff 55%);
+}
+```
