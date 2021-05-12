@@ -265,3 +265,20 @@ setTimeout(() => {
 // 使用setInterval()创建的定时器确保了定时器代码规则地插入队列中。这个问题在于：如果定时器代码在代码再次添加到队列之前还没完成执行，结果就会导致定时器代码连续运行好几次。而之间没有间隔。不过幸运的是：javascript引擎足够聪明，能够避免这个问题。当且仅当没有该定时器的如何代码实例时，才会将定时器代码添加到队列中。这确保了定时器代码加入队列中最小的时间间隔为指定时间。
 // 这种重复定时器的规则有两个问题：1.某些间隔会被跳过 2.多个定时器的代码执行时间可能会比预期小。
 // 而用setTimeout模拟实现的setInterval通过递归调用可以实现：在前一个定时器代码执行完成之前，不会向队列插入新的定时代码，确保不会有任何的缺失间隔。而且，它保证在下一次定时器代码执行之前，至少要等待指定的时间间隔。
+
+// 求两个日期中间的有效日期
+// 如 2015-2-8 到 2015-3-3，返回【2015-2-8 2015-2-9...】
+function rangeDay(day1, day2) {
+  const res = []
+  const dayTimes = 24 * 60 * 60 * 1000; // 一天
+  const startTime = day1.getTime();
+  const range = day2.getTime() - startTime; // 间隔天数时间戳
+  let total = 0;
+  while (total <= range && range > 0) {
+    // toLocaleDateString() 方法可根据本地时间把 Date 对象的日期部分转换为字符串，并返回结果。
+    res.push(new Date(startTime + total).toLocaleDateString().replace(/\//g, '-'))
+    total += dayTimes;
+  }
+  return res
+};
+rangeDay(new Date("2015-02-08"), new Date("2015-03-03"))
