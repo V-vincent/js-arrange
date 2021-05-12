@@ -200,15 +200,15 @@ var name = 'Tom';
 // 变量提升
 
 // 扩展题，请写出如下代码的打印结果
-var name = 'Tom';
-(function () {
-  if (typeof name == 'undefined') {
-    name = 'Jack';
-    console.log('Goodbye ' + name);
-  } else {
-    console.log('Hello ' + name);
-  }
-})();
+// var name = 'Tom';
+// (function () {
+//   if (typeof name == 'undefined') {
+//     name = 'Jack';
+//     console.log('Goodbye ' + name);
+//   } else {
+//     console.log('Hello ' + name);
+//   }
+// })();
 // hello Tom
 // 1、首先在进入函数作用域当中，获取name属性
 // 2、在当前作用域没有找到name
@@ -216,7 +216,26 @@ var name = 'Tom';
 // 4、执行else的内容，得到Hello Tom
 
 // 输出以下代码运行结果
-1 + "1" // '11'
-2 * "2" // 4
-[1, 2] + [2, 1] // '1,22,1'
-"a" + + "b" // 'aNaN'
+// 1 + "1" // '11'
+// 2 * "2" // 4
+// [1, 2] + [2, 1] // '1,22,1'
+// "a" + + "b" // 'aNaN'
+
+// 输出以下代码执行结果
+function wait() {
+  return new Promise(resolve =>
+    setTimeout(resolve, 10 * 1000)
+  )
+}
+async function main() {
+  console.time();
+  const x = wait();
+  const y = wait();
+  const z = wait();
+  await x;
+  await y;
+  await z;
+  console.timeEnd();
+}
+main();
+// 三个任务发起的时候没有await，可以认为是同时发起了三个异步。之后各自await任务的结果。结果按最高耗时计算，由于三个耗时一样。所以结果是 10 * 1000ms（或者稍微大于这个数）
