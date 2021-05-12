@@ -238,3 +238,30 @@ function continuityNum(str) {
   }
   return res.join(',');
 }
+
+
+// 用 setTimeout 实现 setInterval，阐述实现的效果与setInterval的差异
+function mySetInterval(fn, timer, args) {
+  mySetInterval.timer && clearTimeout(mySetInterval.timer);
+  if (!mySetInterval.clearTimeout) {
+    mySetInterval.timer = setTimeout(() => {
+      fn.call(this, ...args);
+      mySetInterval(fn, timer, args);
+    }, timer)
+  }
+}
+mySetInterval.clear = function () {
+  this.clearTimeout = true;
+  clearTimeout(this.timer);
+}
+mySetInterval(console.log, 1000, '测试')
+// 5秒后清理定时器
+setTimeout(() => {
+  mySetInterval.clear();
+}, 5000)
+
+// setTimeout(fn, time)是超时调用，它在大于等于time之后调用fn；
+// 而setIntervl(fn, time)是间歇调用，每隔time调用一次。
+// 使用setInterval()创建的定时器确保了定时器代码规则地插入队列中。这个问题在于：如果定时器代码在代码再次添加到队列之前还没完成执行，结果就会导致定时器代码连续运行好几次。而之间没有间隔。不过幸运的是：javascript引擎足够聪明，能够避免这个问题。当且仅当没有该定时器的如何代码实例时，才会将定时器代码添加到队列中。这确保了定时器代码加入队列中最小的时间间隔为指定时间。
+// 这种重复定时器的规则有两个问题：1.某些间隔会被跳过 2.多个定时器的代码执行时间可能会比预期小。
+// 而用setTimeout模拟实现的setInterval通过递归调用可以实现：在前一个定时器代码执行完成之前，不会向队列插入新的定时代码，确保不会有任何的缺失间隔。而且，它保证在下一次定时器代码执行之前，至少要等待指定的时间间隔。
