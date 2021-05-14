@@ -215,12 +215,6 @@ var name = 'Tom';
 // 3、通过作用域链找到最外层，得到name属性
 // 4、执行else的内容，得到Hello Tom
 
-// 输出以下代码运行结果
-// 1 + "1" // '11'
-// 2 * "2" // 4
-// [1, 2] + [2, 1] // '1,22,1'
-// "a" + + "b" // 'aNaN'
-
 // 输出以下代码执行结果
 function wait() {
   return new Promise(resolve =>
@@ -239,3 +233,18 @@ async function main() {
 }
 main();
 // 三个任务发起的时候没有await，可以认为是同时发起了三个异步。之后各自await任务的结果。结果按最高耗时计算，由于三个耗时一样。所以结果是 10 * 1000ms（或者稍微大于这个数）
+
+// 四则运算打印
+// console.log(1 + "1") // '11'
+// console.log(2 * "2") // 4
+// console.log([1, 2] + [2, 1]) // '1,22,1'
+// console.log("a" + + "b") // 'aNaN'
+// console.log(+ "3" + 2 + 1) // 6
+// console.log(1 + + '2' + '3') // '33'
+// console.log('A' - 'B' + 'C') // 'NaNC'
+// console.log(0 && 2 || 1) // 1
+
+// var aa = 0.1, bb = aa+++aa, cc = aa--+bb;
+// console.log(bb, cc); 
+// bb = aa++ +aa = 0.1 + aa = 0.1 + 1.1 = 1.2; aa = 1.1;
+// cc = 1.1-- + 1.2 = 1.1 + 1.2 = 2.3; aa = 0.1;
