@@ -248,3 +248,15 @@ main();
 // console.log(bb, cc); 
 // bb = aa++ +aa = 0.1 + aa = 0.1 + 1.1 = 1.2; aa = 1.1;
 // cc = 1.1-- + 1.2 = 1.1 + 1.2 = 2.3; aa = 0.1;
+
+// 对象获取属性值
+// const bird = {
+//   size: "small"
+// };
+// const mouse = {
+//   name: "Mickey",
+//   small: true
+// };
+// console.log(mouse[bird.size]);
+// console.log(mouse[bird["size"]]);
+// console.log(mouse.bird.size);
