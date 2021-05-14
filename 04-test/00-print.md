@@ -1,7 +1,6 @@
 ## 这些看似简单的打印面试题，你都做对了吗？
 
 ### 变量提升
-#### `var`定义变量
 ```js
 var a = 'hello world';
 var a;
@@ -15,7 +14,19 @@ a = 'hello world';
 console.log(a);
 ```
 
-#### 函数提升
+那么再来做几道关于变量提升的题吧。
+```js
+var a = 10;
+(function () {
+  console.log(a);
+  a = 5;
+  console.log(window.a);
+  var a = 20;
+  console.log(a);
+})()
+```
+
+### 函数提升
 ```js
 console.log(a);
 var a = 1;
@@ -36,8 +47,7 @@ console.log(a);
 函数a和变量a出发找地方建房子，虽然函数a晚出发，但是它速度快（函数提升优先级高于变量提升），等变量a到的时候函数a已经建好房子并且住进去了，变量a看到这个风水宝地被占了于是就走了（且不会被同名变量声明时覆盖），这时候打印的是`ƒ a() {}`；但是变量a不甘心，它搬救兵（`a = 1`）回来了（同名变量赋值），最后再打印`a`的结果会是`1`。
 
 
-那么再来做两道道关于函数提升的题吧。
-- 同名变量和同名函数
+那么再来做几道关于函数提升的题吧。
 ```js
 a();
 var a = function () {
@@ -49,7 +59,6 @@ function a() {
 }
 a();
 ```
-- 函数重复声明
 ```js
 a();
 function a() {
@@ -58,6 +67,14 @@ function a() {
 function a() {
   console.log(2);
 }
+```
+```js
+var b = 10;
+(function b() {
+  b = 20;
+  console.log(b);
+})();
+console.log(b);
 ```
 
 #### 暂时性死区
@@ -107,6 +124,32 @@ console.log(1 === new Number(1));
 ```
 输出：`true`、`false`。`new Number(1)`为一个对象，当使用`==`时类型不同会进行隐式转换，转化为相同的类型再比较，所以输出`true`；当使用`===`时，值和类型都要相等，所以输出`false`。
 
+```js
+let num = 1;
+console.log(num++);
+console.log(++num);
+console.log(num);
+```
+输出：`1`、`3`、`3`。以上打印代码相当于：
+```js
+console.log(num);
+num = num + 1;
+num = num + 1;
+console.log(num);
+console.log(num);
+```
+`a++`和`++a`的区别：
+- `a++`：先将`a`的值赋给一个变量，再自增
+- `++a`：先自增，再把`a`的值赋给一个变量
+举例说明：
+```js
+var a = 0;
+b = a++; // 等同于 b = a; a = a + 1; 此时 b = 0，a = 1
+```
+```js
+var a = 0;
+b = ++a; // 等同于 a = a + 1; b = a; 此时 b = 1，a = 1
+```
 ### this
 ```js
 let obj = {
@@ -124,7 +167,37 @@ obj.fn2();
 输出：`10` 和 `undefined`。函数`fn1`中的`this`指向`obj`对象；而`fn2`是箭头函数，箭头函数没有自己的执行上下文，会继承调用函数中的 `this`，即`fn2`中的`this`指向`window`对象。
 
 ### 对象
-#### 对象赋值
+#### 一
+```js
+// example 1
+var a = {}, b = '123', c = 123;
+a[b] = 'b';
+a[c] = 'c';
+console.log(a[b]);
+
+// example 2
+var a = {}, b = Symbol('123'), c = Symbol('123');
+a[b] = 'b';
+a[c] = 'c';
+console.log(a[b]);
+
+// example 3
+var a = {}, b = { key: '123' }, c = { key: '456' };
+a[b] = 'b';
+a[c] = 'c';
+console.log(a[b]);
+```
+
+对象键名转换：
+- 对象的键名只能是字符串和 Symbol 类型。
+- 其他类型的键名会被转换成字符串类型。
+- 对象转字符串默认会调用 toString 方法。
+输出：
+- example1：输出`c`；键名会转化为字符串，`a[b]`和 `a[c]`都是 `a['123']`
+- example2：输出`b`； Symbol类型的数据是唯一的，当作键名也不会一样，所以 `a[b]` 会输出`b` 
+- example3：输出`c`；对象转字符串默认调用`toString`方法，`a[b]`和 `a[c]` 都是 `a['[object Object]']`
+
+#### 二
 ```js
 let a = { name: '张三' };
 let b;
@@ -133,6 +206,7 @@ a.name = '李四';
 console.log(b.name);
 ```
 输出：`李四`。当设置`b = a`时，它们为相同的引用；修改引用的属性值，所有指向这个引用的对象都会改变。
+
 
 ### 异步
 ```js
@@ -146,7 +220,28 @@ for (let i = 0; i < 3; i++) {
 第一个循环结果输出3个`3`；`setTimeout`函数会被添加到消息队列尾部，当它真正被执行时`for`循环已经走完，这时`i = 6`。
 第二个循环输出`0` `1` `2`；`let` 具有块级作用域，每次迭代`i` 都会创建为一个新值，并且每个值都会存在于循环内的块级作用域。
 
+```js
+setTimeout(function () {
+  console.log('1000')
+}, 1000)
+setTimeout(function () {
+  console.log('500')
+}, 500)
+```
+输出：`500`、`1000`。`setTimeout(fn, time)` 是超时调用，它在大于等于 `time` 之后调用 `fn`。
 
-https://blog.csdn.net/a13456989814/article/details/107451167
-https://blog.csdn.net/a13456989814/article/details/107469206
-https://www.cnblogs.com/loveliang/p/13645515.html
+### HTML
+- HTML的内容如下，页面会显示什么呢？
+```html
+<div>test1</div>
+<script>
+  let div1 = document.getElementsByTagName('div')[0]
+  div1.innerText = 'hello world'
+
+  let div2 = document.getElementsByTagName('div')[1]
+  div2.innerText = 'hello code'
+</script>
+<div>test2</div>
+```
+页面显示：`hello world`和`test2`。
+浏览器解析HTML时遇到`<script>`会暂停解析，去执行js代码，此时已经解析第一个`<div>`标签，会把`div1`的内容修改为`hello world`（回流）；但是第二个`<div>`标签还未解析，获取不到第二个`<div>`标签，此时打开控制台会发现显示报错。执行完js代码之后再回来接着解析剩下的HTML代码。
