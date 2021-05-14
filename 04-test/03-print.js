@@ -248,6 +248,10 @@ main();
 // console.log(bb, cc); 
 // bb = aa++ +aa = 0.1 + aa = 0.1 + 1.1 = 1.2; aa = 1.1;
 // cc = 1.1-- + 1.2 = 1.1 + 1.2 = 2.3; aa = 0.1;
+// let num = 1;
+// console.log(num++);
+// console.log(++num);
+// console.log(num);
 
 // 对象获取属性值
 // const bird = {
@@ -260,3 +264,16 @@ main();
 // console.log(mouse[bird.size]);
 // console.log(mouse[bird["size"]]);
 // console.log(mouse.bird.size);
+
+// (() => {
+//   let a, b;
+//   try {
+//     throw new Error();
+//   } catch (a) {
+//     (a = 1), (b = 2);
+//     console.log(a);
+//   }
+//   console.log(a);
+//   console.log(b);
+// })();
+// 输出：`1`、`undefined`、`2`。
