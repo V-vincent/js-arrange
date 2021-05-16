@@ -1,16 +1,14 @@
 // 作用域？
 var a = 1;
-
-function change1(a) {
+(function (a) {
   a = 2;
-}
-change1(a);
-// console.log(a); // 1
+})()
+console.log(a); // 1
+
 
 var user = {
   age: 10,
 }
-
 function change2(user) {
   user.age = 20;
 }
@@ -26,7 +24,7 @@ change3(user);
 
 
 function test(a, b) {
-  // console.log(b);
+  console.log(b);
   return {
     test: function (c, a) {
       return test(c, a);
