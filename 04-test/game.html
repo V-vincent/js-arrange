@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>井子棋</title>
+</head>
+<style>
+  .box {
+    width: 300px;
+    height: 300px;
+    box-sizing: border-box;
+  }
+
+  .box>div {
+    width: 100px;
+    height: 100px;
+    float: left;
+    font-size: 50px;
+    text-align: center;
+    line-height: 100px;
+    background-color: aliceblue;
+  }
+
+  .box>div.other {
+    background-color: aquamarine;
+  }
+</style>
+
+<body>
+  <div class="box" id="box">
+    <div id="1" class="other"></div>
+    <div id="2"></div>
+    <div id="3" class="other"></div>
+    <div id="4"></div>
+    <div id="5" class="other"></div>
+    <div id="6"></div>
+    <div id="7" class="other"></div>
+    <div id="8"></div>
+    <div id="9" class="other"></div>
+  </div>
+</body>
+
+</html>
+<script>
+  let box = document.getElementById('box');
+  let isOne = true;
+  let isWin = false;
+  let obj = {
+    '1': "",
+    '2': "",
+    "3": "",
+    "4": "",
+    "5": "",
+    "6": "",
+    "7": "",
+    "8": "",
+    "9": "",
+  }
+  box.addEventListener('click', function (event) {
+    let target = event.target;
+    if (isWin) {
+      alert("游戏已经结束，请刷新重置！")
+      return;
+    }
+    if (obj[target.id] == '1' || obj[target.id] === '0') {
+      alert('请下其它位置');
+      return
+    }
+    target.innerHTML = isOne ? 'X' : 'O';
+    obj[target.id] = isOne ? 1 : 0;
+    isOne = !isOne;
+    let timer = setTimeout(function () {
+      let board = getBoard(obj);
+      let res = getBoardStatus(board);
+      if (res != -1) {
+        alert(res + '赢了，游戏结束');
+        isWin = true;
+        clearTimeout(timer);
+      }
+    }, 1000)
+  })
+
+  function getBoard(obj) {
+    let temp = Object.values(obj)
+    let res = [];
+    res.push([...temp.slice(0, 3)]);
+    res.push([...temp.slice(3, 6)]);
+    res.push([...temp.slice(6, 9)]);
+    return res;
+  }
+  function getBoardStatus(board = []) {
+    if (board[0][0] === board[0][1] && board[0][1] === board[0][2]) {
+      return board[0][0] === 1 ? 'X' : board[0][0] === 0 ? 'O' : '-1';
+    }
+    if (board[1][0] === board[1][1] && board[1][1] === board[1][2]) {
+      return board[1][0] === 1 ? 'X' : board[1][0] === 0 ? 'O' : '-1';
+    }
+    if (board[2][0] === board[2][1] && board[2][1] === board[1][2]) {
+      return board[2][0] === 1 ? 'X' : board[2][0] === 0 ? 'O' : '-1';
+    }
+    if (board[0][0] === board[1][0] && board[1][0] === board[2][0]) {
+      return board[0][0] === 1 ? 'X' : board[0][0] === 0 ? 'O' : '-1';
+    }
+    if (board[0][1] === board[1][1] && board[1][1] === board[2][1]) {
+      return board[0][1] === 1 ? 'X' : board[0][1] === 0 ? 'O' : '-1';
+    }
+    if (board[0][2] === board[1][2] && board[1][2] === board[2][2]) {
+      return board[0][2] === 1 ? 'X' : board[0][2] === 0 ? 'O' : '-1';
+    }
+    if (board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+      return board[0][0] === 1 ? 'X' : board[0][0] === 0 ? 'O' : '-1';
+    }
+    if (board[2][0] === board[1][1] && board[1][1] === board[0][2]) {
+      return board[2][0] === 1 ? 'X' : board[2][0] === 0 ? 'O' : '-1';
+    }
+    return '-1';
+  }
+
+  // 井字棋双方各由X和O表示，其中某一方横竖斜形成3连即为获胜，设棋盘为 3 * 3 的二维数组，
+  // 1表示X，0表示O，''表示格子为空，实现一个判断函数，输入参数为棋盘数组，
+  // 输出为胜利者（ 'X' 或 'O' ），棋盘上没有获胜者的情况下，返回 -1。
+  // 测试示例：
+  console.log(getBoardStatus([["", "", ""], ["", "", ""], ["", "", ""]]))
+  // 输出 -1
+
+  console.log(getBoardStatus([[1, 0, ""], [1, 0, ""], [1, "", ""]]))
+  // 输出 'X'
+
+  console.log(getBoardStatus([[0, 1, ""], [1, 0, ""], ["", 1, 0]]))
+  // 输出 'O'
+</script>
