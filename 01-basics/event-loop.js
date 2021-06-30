@@ -156,6 +156,19 @@
 // });
 // console.log('script end');
 
+// Promise.resolve().then(() => {
+//   console.log('async3 end');
+//   Promise.resolve().then(() => {
+//     console.log('async2 end');
+//     Promise.resolve().then(() => {
+//       console.log('async1 end');
+//     })
+//   })
+// })
+// Promise.resolve().then(() => {
+//   console.log('promise2');
+// })
+
 // 混合版本五
 async function async1() {
   console.log('async1 start');
@@ -182,6 +195,19 @@ new Promise(function (resolve) {
   console.log('promise2');
 });
 console.log('script end');
+
+Promise.resolve().then(() => {
+  console.log('async3 end');
+  Promise.resolve().then(() => {
+    console.log('async2 end');
+  })
+})
+Promise.resolve().then(() => {
+  console.log('async1 end');
+})
+Promise.resolve().then(() => {
+  console.log('promise2');
+})
 
 // setTimeout和setImmediate
 // setTimeout(() => {
