@@ -246,11 +246,17 @@ Promise.resolve().then(() => {
 
 function func1() {
   console.log('func1 start');
-  return new Promise(resolve => { resolve('OK'); })
+  return new Promise(resolve => {
+    resolve('OK');
+  })
 }
 function func2() {
   console.log('func2 start');
-  return new Promise(resolve => { setTimeout(() => { resolve('OK'); }, 10) })
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve('OK');
+    }, 10)
+  })
 }
 console.log(1);
 setTimeout(async () => {
@@ -260,9 +266,15 @@ setTimeout(async () => {
 }, 20);
 for (let i = 0; i < 90000000; i++) { } // 约 80 ms
 console.log(4);
-func1().then(() => { console.log(5); })
-func2().then(() => { console.log(6); })
-setTimeout(() => { console.log(7) }, 0); 
+func1().then(() => {
+  console.log(5);
+})
+func2().then(() => {
+  console.log(6);
+})
+setTimeout(() => {
+  console.log(7)
+}, 0);
 console.log(8);
 
 // 1
