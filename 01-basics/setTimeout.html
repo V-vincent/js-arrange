@@ -14,16 +14,13 @@
 
 </html>
 <script>
-  let num = 1000;
+  // 未激活的页面setTimeout有最小时研 `1000ms`
+  // 未激活页面：切换标签页或最小化浏览器
+  let num = 100;
 
-  function settime() {
-    console.log(new Date().getMinutes() + ":" + new Date().getSeconds() + " " + num);
-    if (num > 0) {
-      num--;
-      setTimeout(() => settime(), 200);
-    } else {
-      num = 0;
-    }
+  function setTime() {
+    console.log(new Date().getSeconds() + "：" + num);
+    num ? num-- && setTimeout(() => setTime(), 50) : "";
   }
-  settime();
+  setTime();
 </script>
