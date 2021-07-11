@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM 的变化如何去监听</title>
+</head>
+
+<body>
+  <div id="box">1</div>
+</body>
+
+</html>
+<script>
+  // let box = document.getElementById('box')
+  // box.addEventListener("DOMSubtreeModified", function () {
+  //   console.log('box 元素被修改');
+  // }, false);
+
+  // let observe = new MutationObserver(function (mutations, observer) {});
+
+  // 选择需要观察变动的节点
+  const targetNode = document.getElementById('box');
+  // 观察器的配置（需要观察什么变动）
+  const config = {
+    attributes: true,
+    childList: true,
+    subtree: true
+  };
+  // 当观察到变动时执行的回调函数
+  const callback = function (mutationsList, observer) {
+    for (let mutation of mutationsList) {
+      if (mutation.type === 'childList') {
+        console.log('有节点发生改变，当前节点的内容是：' + mutation.target.innerHTML);
+      } else if (mutation.type === 'attributes') {
+        console.log('修改了' + mutation.attributeName + '属性');
+      }
+    }
+  };
+  // 创建一个观察器实例并传入回调函数
+  const observer = new MutationObserver(callback);
+  // 以上述配置开始观察目标节点
+  observer.observe(targetNode, config);
+  // 之后，可停止观察
+  // observer.disconnect();
+</script>
