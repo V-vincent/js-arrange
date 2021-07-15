@@ -288,3 +288,31 @@ console.log(8);
 // 3
 // 7
 // 6
+
+
+
+console.log('script start');
+function test() {
+  console.log('async test');
+}
+async function asyncFunc1() {
+  await test();
+  console.log('async start');
+  return 'abc';
+}
+asyncFunc1().then(function (res) {
+  console.log('async end' + res)
+});
+var promise = new Promise(function (resolve, reject) {
+  console.log('promise start'); resolve();
+});
+promise.then(function () {
+  console.log('promise end');
+});
+setTimeout(function () {
+  console.log('setTimeout first')
+}, 0)
+setTimeout(function () {
+  console.log('setTimeout second')
+});
+console.log('script end');
