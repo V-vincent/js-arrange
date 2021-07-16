@@ -64,3 +64,78 @@ const mySetTimeout = (fn, time) => {
 //   console.log(1);
 // }, 1000)
 
+// 发布订阅模式
+// 实现一个发布订阅模式拥有 on emit once off 方法
+class EventEmitter {
+  constructor() {
+    this.events = {};
+  }
+  // 实现订阅
+  on(type, callBack) {
+    if (!this.events[type]) {
+      this.events[type] = [callBack];
+    } else {
+      this.events[type].push(callBack);
+    }
+  }
+  // 删除订阅
+  off(type, callBack) {
+    if (!this.events[type]) return;
+    this.events[type] = this.events[type].filter((item) => {
+      return item !== callBack;
+    });
+  }
+  // 只执行一次订阅事件
+  once(type, callBack) {
+    function fn() {
+      callBack();
+      this.off(type, fn);
+    }
+    this.on(type, fn);
+  }
+  // 触发事件
+  emit(type, ...rest) {
+    this.events[type] &&
+      this.events[type].forEach((fn) => fn.apply(this, rest));
+  }
+}
+// 使用如下
+// const event = new EventEmitter();
+// const handle = (...rest) => {
+//   console.log(rest);
+// };
+// event.on("click", handle);
+// event.emit("click", 1, 2, 3, 4);
+// event.off("click", handle);
+// event.emit("click", 1, 2);
+// event.once("dbClick", () => {
+//   console.log(123456);
+// });
+// event.emit("dbClick");
+// event.emit("dbClick");
+
+// 数组去重
+function uniqueArr(arr) {
+  return [...new Set(arr)];
+}
+
+// 数组扁平化
+// 实现一个方法使多维数组变成一维数组
+// 递归版本
+function flatter(arr) {
+  if (!arr.length) return;
+  return arr.reduce(
+    (pre, cur) =>
+      Array.isArray(cur) ? [...pre, ...flatter(cur)] : [...pre, cur],
+    []
+  );
+}
+
+// 迭代
+function flatter(arr) {
+  if (!arr.length) return;
+  while (arr.some((item) => Array.isArray(item))) {
+    arr = [].concat(...arr);
+  }
+  return arr;
+}
