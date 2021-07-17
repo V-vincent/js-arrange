@@ -32,38 +32,6 @@ function compose(...fn) {
 //   );
 // }
 
-// setTimeout 模拟实现 setInterval
-const mySetInterval = (fn, time) => {
-  let timer = null;
-  const interval = () => {
-    fn();
-    timer = setTimeout(interval, time);
-  }
-  interval();
-  return {
-    cancel: () => {
-      clearTimeout(timer);
-    }
-  }
-}
-// let time = mySetInterval(() => {
-//   console.log(111);
-// }, 1000)
-// setTimeout(() => {
-//   time.cancel();
-// }, 3000);
-
-// 能反过来使用 setInterval 模拟实现 setTimeout 吗？
-const mySetTimeout = (fn, time) => {
-  let timer = setInterval(() => {
-    clearInterval(timer);
-    fn();
-  }, time);
-}
-// mySetTimeout(() => {
-//   console.log(1);
-// }, 1000)
-
 // 发布订阅模式
 // 实现一个发布订阅模式拥有 on emit once off 方法
 class EventEmitter {
