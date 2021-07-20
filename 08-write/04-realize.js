@@ -44,19 +44,23 @@ function getSevevNum(num) {
 }
 // console.log(getSevevNum(10));
 
-// 某公司 1 到 12 月份的销售额存在一个对象里面
-// 如下：{1:222, 2:123, 5:888}，请把数据处理为如下结构：[222, 123, null, null, 888, null, null, null, null, null, null, null]。
-function dealSaleDate(obj) {
-  if (toString.call(obj) !== '[object Object]') {
-    throw new Error('this obj is not an object');
+// 输入 '1, 2, 3, 5, 7, 8, 10' 输出 '1~3, 5, 7~8, 10'
+// 连续数归纳
+function continuityNum(str) {
+  let arr = str.split(',');
+  arr.push('');
+  let res = [];
+  let start = end = parseInt(arr[0]);
+  for (let i = 1; i < arr.length; i++) {
+    if (end + 1 == arr[i]) {
+      end++;
+    } else {
+      if (start == end) res.push(start);
+      else res.push(start + '~' + end);
+      start = end = parseInt(arr[i]);
+    }
   }
-  let arr = Array(12).fill(null);
-  for (let i = 0; i < 12; i++) {
-    arr[i] = obj[i + 1] || null
-  }
-  return arr;
+  return res.join(',');
 }
-function dealSaleObjToArr(obj) {
-  return Array.from({ length: 12 }).map((item, index) => obj[index + 1] || null);
-}
-// console.log(dealSaleObjToArr({ 1: 222, 2: 123, 5: 888 }))
+
+// 
