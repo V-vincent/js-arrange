@@ -29,6 +29,8 @@ function add(...args) {
 }
 
 // 不用加减乘除运算符，求整数的 7 倍
+// 思路：
+// 利用数组的长度属性
 function getSevevNum(num) {
   let res = [];
   let arr = Array.from({ length: num });
