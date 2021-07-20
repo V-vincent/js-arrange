@@ -1,37 +1,3 @@
-// 实现一个 compose 函数
-// 用法如下:
-function fn1(x) {
-  return x + 1;
-}
-function fn2(x) {
-  return x + 2;
-}
-function fn3(x) {
-  return x + 3;
-}
-function fn4(x) {
-  return x + 4;
-}
-const com = compose(fn1, fn2, fn3, fn4);
-// console.log(com(1)); // 1 + 4 + 3 + 2 + 1 = 11
-// 分析 compose 返回一个函数，里面按后入先出的顺序执行
-function compose(...fn) {
-  return (num) => {
-    return fn.reverse().reduce((pre, cur) => {
-      return cur(pre);
-    }, num)
-  }
-}
-// function compose(...fn) {
-//   if (!fn.length) return (v) => v;
-//   if (fn.length === 1) return fn[0];
-//   return fn.reduce(
-//     (pre, cur) =>
-//       (...args) =>
-//         pre(cur(...args))
-//   );
-// }
-
 // 发布订阅模式
 // 实现一个发布订阅模式拥有 on emit once off 方法
 class EventEmitter {
@@ -81,29 +47,3 @@ class EventEmitter {
 // });
 // event.emit("dbClick");
 // event.emit("dbClick");
-
-// 数组去重
-function uniqueArr(arr) {
-  return [...new Set(arr)];
-}
-
-// 数组扁平化
-// 实现一个方法使多维数组变成一维数组
-// 递归版本
-function flatter(arr) {
-  if (!arr.length) return;
-  return arr.reduce(
-    (pre, cur) =>
-      Array.isArray(cur) ? [...pre, ...flatter(cur)] : [...pre, cur],
-    []
-  );
-}
-
-// 迭代
-function flatter(arr) {
-  if (!arr.length) return;
-  while (arr.some((item) => Array.isArray(item))) {
-    arr = [].concat(...arr);
-  }
-  return arr;
-}
