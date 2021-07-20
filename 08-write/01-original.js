@@ -95,6 +95,29 @@ Function.prototype.myBind = function (context, ...args) {
 // let bindFn = thisObj1.say.bind(thisObj2, 1, 2);
 // bindFn(3, 4);
 
+// 实现一个 flat 函数，将数组偏平化
+let flatArr = [1, 2, 3, [4, 5], [6, [7, [8]]]];
+// console.log(flatArr.flat(Infinity))
+// function flatten(arr) {
+//   while (arr.some(item => Array.isArray(item))) {
+//     arr = [].concat(...arr);
+//   }
+//   return arr;
+// }
+// 迭代
+function flatten(arr) {
+  let res = [];
+  arr.map(item => {
+    if (Array.isArray(item)) {
+      res.push(...flatten(item))
+    } else {
+      res.push(item);
+    }
+  })
+  return res;
+}
+// console.log(flatten(flatArr))
+
 // 用 setTimeout 模拟实现 setInterval
 // setTimeout：在指定毫秒之后执行回调函数
 // setInterval：间歇调用，每隔指定毫秒之后调用一次
@@ -113,12 +136,12 @@ function mySetInterval(fn, time, ...args) {
     }
   }
 }
-let timer = mySetInterval(function () {
-  console.log(0, ...arguments);
-}, 1000, 1, 2, 3)
-setTimeout(() => {
-  timer.clear();
-}, 3000);
+// let timer = mySetInterval(function () {
+//   console.log(0, ...arguments);
+// }, 1000, 1, 2, 3)
+// setTimeout(() => {
+//   timer.clear();
+// }, 3000);
 
 // 另一个版本
 // function mySetInterval(fn, timer, args) {
