@@ -26,3 +26,19 @@ function getUrlValue(url) {
   let res = url.match(/(?<=elective=)(\d+(,\d+)*)/);
   return res ? res[0].split(',') : [];
 }
+
+// 求两个日期中间的有效日期
+// 如 2015-2-8 到 2015-3-3，返回['2015-2-8', '2015-2-9'...]
+function getRangeDay(start, end) {
+  let res = [];
+  let oneDay = 24 * 60 * 60 * 1000;
+  let startDate = start.getTime();
+  let range = end.getTime() - startDate;
+  let total = 0;
+  while (total <= range && range > 0) {
+    res.push(new Date(startDate + total).toLocaleDateString())
+    total += oneDay;
+  }
+  return res;
+}
+// console.log(getRangeDay(new Date("2015-02-08"), new Date("2015-03-03")));
