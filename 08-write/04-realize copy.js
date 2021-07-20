@@ -71,39 +71,6 @@ class localStorage {
   }
 })()
 
-// 编程题
-// url有三种情况
-// https://www.xx.cn/api?keyword=&level1=&local_batch_id=&elective=&local_province_id=33
-// https://www.xx.cn/api?keyword=&level1=&local_batch_id=&elective=800&local_province_id=33
-// https://www.xx.cn/api?keyword=&level1=&local_batch_id=&elective=800,700&local_province_id=33
-// 匹配elective后的数字输出（写出你认为的最优解法）:
-// [] || ['800'] || ['800','700']
-function getUrlValue(url) {
-  if (!url) return;
-  let res = url.match(/(?<=elective=)(\d+(,\d+)*)/);
-  return res ? res[0].split(',') : [];
-}
-
-// 编程题，请写一个函数，完成以下功能
-// 输入 '1, 2, 3, 5, 7, 8, 10' 输出 '1~3, 5, 7~8, 10'
-// 连续数归纳
-function continuityNum(str) {
-  let arr = str.split(',');
-  arr.push('');
-  let res = [];
-  let start = end = parseInt(arr[0]);
-  for (let i = 1; i < arr.length; i++) {
-    if (end + 1 == arr[i]) {
-      end++;
-    } else {
-      if (start == end) res.push(start);
-      else res.push(start + '~' + end);
-      start = end = parseInt(arr[i]);
-    }
-  }
-  return res.join(',');
-}
-
 // 求两个日期中间的有效日期
 // 如 2015-2-8 到 2015-3-3，返回【2015-2-8 2015-2-9...】
 function rangeDay(day1, day2) {
