@@ -188,3 +188,51 @@ const mySetTimeout = (fn, time) => {
 // mySetTimeout(() => {
 //   console.log(1);
 // }, 1000)
+
+
+// 继承
+// 寄生组合继承
+// 核心是 将父类的原型赋值给了子类，并且将构造函数设置为子类，
+// 这样既解决了无用的父类属性问题，还能正确的找到子类的构造函数
+function Parent(name) {
+  this.name = name || 'vincent';
+  this.run = function (todo) {
+    console.log(this.name + todo);
+  }
+}
+Parent.prototype.say = function () {
+  console.log('I am ' + this.name);
+}
+function Child(name) {
+  // 在子类的构造函数中通过 Parent.call(this) 继承父类的属性
+  Parent.call(this, name);
+}
+// 核心
+Child.prototype = Object.create(Parent.prototype);
+Child.prototype.constructor = Child;
+
+// let child1 = new Child('干饭魂');
+// child1.run(); // 干饭魂干饭
+// child1.say(); // 干饭魂
+// console.log(child1)
+
+// Class 继承
+class ParentClass {
+  constructor(name) {
+    this.name = name;
+  }
+  run(todo) {
+    console.log(this.name + todo);
+  }
+}
+class ChildClass extends ParentClass {
+  constructor(name) {
+    super(name);
+  }
+  say() {
+    console.log('I am ' + this.name);
+  }
+}
+// let child1 = new ChildClass('vincent');
+// child1.say();
+// child1.run('跑步');
