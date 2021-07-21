@@ -95,6 +95,20 @@ Function.prototype.myBind = function (context, ...args) {
 // let bindFn = thisObj1.say.bind(thisObj2, 1, 2);
 // bindFn(3, 4);
 
+
+// 实现一个 new
+// 实现过程
+// 1、创建一个新对象
+// 2、将构造函数的原型赋给新对象的 __proto__
+// 3、将执行上下文指向新对象
+// 4、根据构造函数的返回结果类型返回新对象或者构造函数的返回值
+function myNew(Con, ...args) {
+  let obj = new Object();
+  obj.__proto__ = Con.prototype;
+  let res = Con.call(obj, ...args);
+  return typeof res === 'object' ? res : obj;
+}
+
 // 实现一个 flat 函数，将数组偏平化
 let flatArr = [1, 2, 3, [4, 5], [6, [7, [8]]]];
 // console.log(flatArr.flat(Infinity))
