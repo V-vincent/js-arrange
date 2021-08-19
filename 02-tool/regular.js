@@ -38,16 +38,11 @@ common.validTissueUsc = function (idcard) {
 common.isMobile = function (phone) {
   let isFixMob = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
   let isPhone = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/;
-  if (isFixMob.test(phone) || isPhone.test(phone)) {
-    return true;
-  }
-  return false;
+  return isFixMob.test(phone) || isPhone.test(phone);
+
 }
 // 金额验证
 common.isMoney = function (money) {
   let reg = /^(\d+|\d+\.\d{1,6})$/;
-  if (reg.test(money)) {
-    return true;
-  }
-  return false;
+  return reg.test(money);
 }

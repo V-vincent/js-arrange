@@ -17,7 +17,7 @@ class Stack {
   }
   // 判断是否为空
   isEmpty() {
-    return this.items.length ? false : true;
+    return !this.items.length;
   }
   // 栈的长度
   size() {

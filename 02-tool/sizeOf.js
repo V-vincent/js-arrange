@@ -23,7 +23,7 @@ let test = {
 function checkDataType(data) {
   let type = typeof data;
   if (type !== 'object') return type;
-  return Object.prototype.toString.call(data).replace(/^\[object (\S+)\]/g, '$1');
+  return Object.prototype.toString.call(data).replace(/^\[object (\S+)]/g, '$1');
 }
 // 递归处理
 function calculator(obj) {
