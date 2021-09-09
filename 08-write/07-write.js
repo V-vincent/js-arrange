@@ -21,7 +21,7 @@ class EventEmitter {
   }
   // 只执行一次订阅事件
   once(type, callBack) {
-    function fn() {
+    const fn = () => {
       callBack();
       this.off(type, fn);
     }

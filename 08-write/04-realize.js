@@ -31,7 +31,7 @@ function add(...args) {
 // 不用加减乘除运算符，求整数的 7 倍
 // 思路：
 // 利用数组的长度属性
-function getSevevNum(num) {
+function getServeNum(num) {
   let res = [];
   let arr = Array.from({ length: num });
   let temp = Array.from({ length: 7 });
@@ -42,7 +42,7 @@ function getSevevNum(num) {
   // 进制转换方式 - 利用 toString 转为七进制整数；然后末尾补0(左移一位)后通过 parseInt 转回十进制
   // return parseInt([num.toString(7), '0'].join(''), 7);
 }
-// console.log(getSevevNum(10));
+console.log(getServeNum(10));
 
 // 输入 '1, 2, 3, 5, 7, 8, 10' 输出 '1~3, 5, 7~8, 10'
 // 连续数归纳
@@ -50,12 +50,13 @@ function continuityNum(str) {
   let arr = str.split(',');
   arr.push('');
   let res = [];
+  let end;
   let start = end = parseInt(arr[0]);
   for (let i = 1; i < arr.length; i++) {
-    if (end + 1 == arr[i]) {
+    if (end + 1 === arr[i]) {
       end++;
     } else {
-      if (start == end) res.push(start);
+      if (start === end) res.push(start);
       else res.push(start + '~' + end);
       start = end = parseInt(arr[i]);
     }
