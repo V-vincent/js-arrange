@@ -4,6 +4,7 @@ class EventEmitter {
   constructor() {
     this.events = {};
   }
+
   // 实现订阅
   on(type, callBack) {
     if (!this.events[type]) {
@@ -12,6 +13,7 @@ class EventEmitter {
       this.events[type].push(callBack);
     }
   }
+
   // 删除订阅
   off(type, callBack) {
     if (!this.events[type]) return;
@@ -19,6 +21,7 @@ class EventEmitter {
       return item !== callBack;
     });
   }
+
   // 只执行一次订阅事件
   once(type, callBack) {
     const fn = () => {
@@ -27,12 +30,14 @@ class EventEmitter {
     }
     this.on(type, fn);
   }
+
   // 触发事件
   emit(type, ...rest) {
     this.events[type] &&
-      this.events[type].forEach((fn) => fn.apply(this, rest));
+    this.events[type].forEach((fn) => fn.apply(this, rest));
   }
 }
+
 // 使用如下
 // const event = new EventEmitter();
 // const handle = (...rest) => {
