@@ -233,6 +233,6 @@ class ChildClass extends ParentClass {
     console.log('I am ' + this.name);
   }
 }
-// let child1 = new ChildClass('vincent');
-// child1.say();
-// child1.run('跑步');
+let child1 = new ChildClass('vincent');
+child1.say();
+child1.run('跑步');
