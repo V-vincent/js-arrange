@@ -17,7 +17,7 @@ function transformRgba(color) {
       sColorChange.push(parseInt('0x' + sColor.slice(i, i + 2)))
     }
 
-    return `rgba(${sColorChange.join(',')})`
+    return `rgba(${sColorChange.join(',')}, 0.15)` // 15%的透明度
   } else {
     return sColor
   }
