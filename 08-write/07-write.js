@@ -52,11 +52,8 @@ class EventEmitter {
 // });
 // event.emit("dbClick");
 // event.emit("dbClick");
-<<<<<<< HEAD
 
 // 参考资料
 // https://juejin.cn/post/6968713283884974088#heading-1
 // https://juejin.cn/post/6875152247714480136
 // https://juejin.cn/post/6946022649768181774#heading-7
-=======
->>>>>>> c0d2a2be66ec3dafef18ca73522dc9512efb4460
