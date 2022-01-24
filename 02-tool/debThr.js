@@ -55,7 +55,7 @@ async function output1() {
   console.log('async');
   return out;
 }
-output1();
+output1().then(r => console.log(r));
 
 // ES5
 function sleep2(callback, time) {

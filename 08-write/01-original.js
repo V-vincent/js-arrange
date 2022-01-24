@@ -103,7 +103,7 @@ Function.prototype.myBind = function (context, ...args) {
 // 3、将执行上下文指向新对象
 // 4、根据构造函数的返回结果类型返回新对象或者构造函数的返回值
 function myNew(Con, ...args) {
-  let obj = new Object();
+  let obj = {};
   obj.__proto__ = Con.prototype;
   let res = Con.call(obj, ...args);
   return typeof res === 'object' ? res : obj;

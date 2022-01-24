@@ -154,7 +154,7 @@ myBind('卖出')
 // console.log(bar)
 
 
-var myObj = {
+const myObj = {
   name: "极客时间",
   showThis: function () {
     console.log(this); // myObj
@@ -162,8 +162,10 @@ var myObj = {
     // function bar() {
     //   console.log(self); // myObj
     // }
-    var bar = () => { console.log(this) }
+    const bar = () => {
+      console.log(this)
+    };
     bar()
   }
-}
+};
 myObj.showThis();

@@ -4,6 +4,7 @@ class EventEmitter {
   constructor() {
     this.events = {};
   }
+
   // 实现订阅
   on(type, callBack) {
     if (!this.events[type]) {
@@ -12,6 +13,7 @@ class EventEmitter {
       this.events[type].push(callBack);
     }
   }
+
   // 删除订阅
   off(type, callBack) {
     if (!this.events[type]) return;
@@ -19,20 +21,23 @@ class EventEmitter {
       return item !== callBack;
     });
   }
+
   // 只执行一次订阅事件
   once(type, callBack) {
-    function fn() {
+    const fn = () => {
       callBack();
       this.off(type, fn);
     }
     this.on(type, fn);
   }
+
   // 触发事件
   emit(type, ...rest) {
     this.events[type] &&
-      this.events[type].forEach((fn) => fn.apply(this, rest));
+    this.events[type].forEach((fn) => fn.apply(this, rest));
   }
 }
+
 // 使用如下
 // const event = new EventEmitter();
 // const handle = (...rest) => {
@@ -47,8 +52,11 @@ class EventEmitter {
 // });
 // event.emit("dbClick");
 // event.emit("dbClick");
+<<<<<<< HEAD
 
 // 参考资料
 // https://juejin.cn/post/6968713283884974088#heading-1
 // https://juejin.cn/post/6875152247714480136
 // https://juejin.cn/post/6946022649768181774#heading-7
+=======
+>>>>>>> c0d2a2be66ec3dafef18ca73522dc9512efb4460

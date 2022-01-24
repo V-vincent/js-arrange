@@ -3,7 +3,7 @@
 // IE任何版本都不兼容：new Date("2021-03-31 12:00:00") ；
 // 扩展日期转换格式
 Date.prototype.format = function (fmt) {
-  var pattern = {
+  let pattern = {
     "M+": this.getMonth() + 1, // 月份
     "d+": this.getDate(), // 日
     "H+": this.getHours(), // 小时
@@ -15,9 +15,9 @@ Date.prototype.format = function (fmt) {
   };
   if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1,
     (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-  for (var k in pattern)
+  for (let k in pattern)
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1,
-      (RegExp.$1.length == 1) ? (pattern[k]) : (("00" + pattern[k]).substr(("" + pattern[k]).length)));
+      (RegExp.$1.length === 1) ? (pattern[k]) : (("00" + pattern[k]).substr(("" + pattern[k]).length)));
   return fmt;
 }
 function getWeek(i) {
@@ -29,6 +29,5 @@ function getWeek(i) {
     case 4: return "星期四";
     case 5: return "星期五";
     case 6: return "星期六";
-      break;
   }
 }

@@ -7,7 +7,7 @@ if (navigator.serviceWorker) {
       console.log('service worker 注册成功')
     })
     .catch(function (err) {
-      console.log('servcie worker 注册失败')
+      console.log('service worker 注册失败')
     })
 }
 

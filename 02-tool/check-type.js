@@ -2,16 +2,16 @@
 function checkDataType(data) {
   let type = typeof data;
   if (type !== 'object') return type;
-  return Object.prototype.toString.call(data).replace(/^\[object (\S+)\]/g, '$1');
+  return Object.prototype.toString.call(data).replace(/^\[object (\S+)]/g, '$1');
 }
 
 // 判断A是否是B类型的数据
 function myInstanceof(A, B) {
-  let A = A.__proto__;
-  let B = B.prototype;
+  let a = A.__proto__;
+  let b = B.prototype;
   while (1) {
-    if (A === B) return true;
-    else if (A === null) return false;
-    A = A.__proto__;
+    if (a === b) return true;
+    else if (a === null) return false;
+    a = a.__proto__;
   }
 }

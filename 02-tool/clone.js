@@ -38,14 +38,14 @@ function getInit(target) {
   return new Ctor();
 }
 
-function cloneSymbol(targe) {
-  return Object(Symbol.prototype.valueOf.call(targe));
+function cloneSymbol(target) {
+  return Object(Symbol.prototype.valueOf.call(target));
 }
 
-function cloneReg(targe) {
+function cloneReg(target) {
   const reFlags = /\w*$/;
-  const result = new targe.constructor(targe.source, reFlags.exec(targe));
-  result.lastIndex = targe.lastIndex;
+  const result = new target.constructor(target.source, reFlags.exec(target));
+  result.lastIndex = target.lastIndex;
   return result;
 }
 
@@ -71,21 +71,21 @@ function cloneFunction(func) {
   }
 }
 
-function cloneOtherType(targe, type) {
-  const Ctor = targe.constructor;
+function cloneOtherType(target, type) {
+  const Ctor = target.constructor;
   switch (type) {
     case boolTag:
     case numberTag:
     case stringTag:
     case errorTag:
     case dateTag:
-      return new Ctor(targe);
+      return new Ctor(target);
     case regexpTag:
-      return cloneReg(targe);
+      return cloneReg(target);
     case symbolTag:
-      return cloneSymbol(targe);
+      return cloneSymbol(target);
     case funcTag:
-      return cloneFunction(targe);
+      return cloneFunction(target);
     default:
       return null;
   }
